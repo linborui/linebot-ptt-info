@@ -19,8 +19,8 @@ def init_urls():
     urls['hot'] = urljoin(pttweb_url, '/hot/all')
     urls['today'] = urljoin(pttweb_url, '/hot/all/today')
     urls['yesterday'] = urljoin(pttweb_url, '/hot/all/yesterday')
-    urls['this-week'] = urljoin(pttweb_url, '/hot/all/this-week')
-    urls['this-month'] = urljoin(pttweb_url, '/hot/all/this-month')
+    urls['this week'] = urljoin(pttweb_url, '/hot/all/this-week')
+    urls['this month'] = urljoin(pttweb_url, '/hot/all/this-month')
     urls['newest articles'] = urljoin(pttweb_url, '/newest/all')
     return urls
 
