@@ -1,17 +1,15 @@
 import os
 import sys
 
+from argparse import ArgumentParser
+
 from flask import Flask, jsonify, request, abort, send_file
-from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
-
-load_dotenv()
-
 
 machine = TocMachine(
     states=["user", "state1", "state2"],
@@ -116,5 +114,9 @@ def show_fsm():
 
 
 if __name__ == "__main__":
-    port = os.environ.get("PORT", 8000)
-    app.run(host="0.0.0.0", port=port, debug=True)
+    arg_parser = ArgumentParser(usage='Usage: python ' + __file__ + ' [--port <port>] [--help]')
+    arg_parser.add_argument('-p', '--port', type=int, default=8000, help='port')
+    arg_parser.add_argument('-d', '--debug', default=False, help='debug')
+    options = arg_parser.parse_args()
+
+    app.run(debug=options.debug, port=options.port)

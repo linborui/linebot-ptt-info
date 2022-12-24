@@ -1,9 +1,9 @@
 services:
 - type: web
-  name: line-bot-python-flask
+  name: linebot-ptt-info
   env: python
   repo: https://github.com/LinBoRui/linebot-ptt-info.git
-  buildCommand: pip install gunicorn -r requirements.txt
+  buildCommand: pip install -r requirements.txt gunicorn
   startCommand: gunicorn app:app
   plan: free
   autoDeploy: false
