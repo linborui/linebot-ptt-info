@@ -3,8 +3,8 @@ services:
   name: line-bot-ptt-info
   env: python
   repo: https://github.com/LinBoRui/linebot-ptt-info.git
-  buildCommand: pip install -r requirements.txt gunicorn
-  startCommand: gunicorn app:app
+  buildCommand: pip install -r requirements.txt
+  startCommand: python3 app.py
   plan: free
   autoDeploy: false
   envVars:
