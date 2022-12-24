@@ -1,7 +1,7 @@
 import os
 
 from linebot import LineBotApi
-from linebot.models import TextSendMessage, TemplateSendMessage, ButtonsTemplate, CarouselTemplate, MessageAction, URIAction, CarouselColumn
+from linebot.models import TextSendMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, CarouselTemplate, MessageAction, URIAction, CarouselColumn
 
 
 channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
@@ -10,6 +10,11 @@ line_bot_api = LineBotApi(channel_access_token)
 
 def send_text_message(reply_token, text):
     line_bot_api.reply_message(reply_token, TextSendMessage(text=text))
+    return "OK"
+
+
+def send_image_message(reply_token, url):
+    line_bot_api.reply_message(reply_token, ImageSendMessage(original_content_url=url, preview_image_url=url))
     return "OK"
 
 
@@ -35,7 +40,7 @@ def send_carousel_message(reply_token, labels):
     page = 1
     for i in range(len(labels)):
         label = labels[i]
-        if len(label) > 17:
+        if len(label) > 20:
             label = label[:17] + '...'
         actions.append(MessageAction(label=label, text=str(i+1)))
         if i % 3 == 2:

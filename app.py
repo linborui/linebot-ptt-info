@@ -8,7 +8,7 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage
 
 from fsm import PTTMachine, states, transitions
-from utils import send_text_message
+from utils import send_text_message, send_image_message
 
 machine = {}
 
@@ -80,14 +80,14 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         machine[userID].advance(event)
         if event.message.text.lower() == "show fsm":
-            show_fsm(userID)
+            send_image_message(event.reply_token, "https://line-bot-python-flask-wmdi.onrender.com/show-fsm")
     return "OK"
 
 
 @app.route("/show-fsm", methods=["GET"])
-def show_fsm(userID):
+def show_fsm():
     if not os.path.exists("fsm.png"):
-        machine[userID].get_graph().draw("fsm.png", prog="dot", format="png")
+        next(iter(machine.values())).get_graph().draw("fsm.png", prog="dot", format="png")
     return send_file("fsm.png", mimetype="image/png")
 
 
