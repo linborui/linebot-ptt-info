@@ -10,6 +10,8 @@ from linebot.models import MessageEvent, TextMessage
 from fsm import PTTMachine, states, transitions
 from utils import send_text_message, send_image_message
 
+webhook_netloc = 'https://line-bot-python-flask-wmdi.onrender.com'
+
 machine = {}
 machine[0] = PTTMachine(states=states, transitions=transitions, initial='init', auto_transitions=False, show_conditions=True)
 
@@ -81,7 +83,7 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         machine[userID].advance(event)
         if event.message.text.lower() == "show fsm":
-            send_image_message(event.reply_token, "https://line-bot-python-flask-wmdi.onrender.com/show-fsm")
+            send_image_message(event.reply_token, webhook_netloc + "/show-fsm")
     return "OK"
 
 
