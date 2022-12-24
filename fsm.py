@@ -4,7 +4,7 @@ from web_crawler import init_urls, get_pttweb_boards, get_pttweb_articles, get_p
 
 states = ['init', 'hot_articles', 'hot_boards', 'articles', 'board_articles', 'links']
 transitions = []
-sources = {'hot_articles': states[:1] + states[2:5], 'hot_boards': states[:2] + states[3:5], 'articles': ['init', 'hot_articles'], 'board_articles': ['hot_boards'], 'links': states[3:], 'init': states}
+sources = {'hot_articles': states[:1] + states[2:], 'hot_boards': states[:2] + states[3:], 'articles': ['init', 'hot_articles'], 'board_articles': ['hot_boards'], 'links': states[3:], 'init': states}
 for dest in sources:
     transitions.append({'trigger': 'advance', 'source': sources[dest], 'dest': dest, 'conditions': 'is_going_to_' + dest})
 

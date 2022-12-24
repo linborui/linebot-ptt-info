@@ -22,15 +22,16 @@ def send_button_message(reply_token, title, text, buttons):
     actions = []
     for button in buttons:
         actions.append(MessageAction(label=button['label'], text=button['text']))
-    line_bot_api.reply_message(reply_token, TemplateSendMessage(alt_text='Buttons template', template=ButtonsTemplate(title=title, text=text, actions=actions)))
+    line_bot_api.reply_message(reply_token, TemplateSendMessage(alt_text=title, template=ButtonsTemplate(title=title, text=text, actions=actions)))
     return "OK"
+
 
 def send_button_url_message(reply_token, title, text, buttons):
     actions = []
     print(buttons)
     for button in buttons:
         actions.append(URIAction(label=button['label'], uri=button['url']))
-    line_bot_api.reply_message(reply_token, TemplateSendMessage(alt_text='Buttons template', template=ButtonsTemplate(title=title, text=text, actions=actions)))
+    line_bot_api.reply_message(reply_token, TemplateSendMessage(alt_text=title, template=ButtonsTemplate(title=title, text=text, actions=actions)))
     return "OK"
 
 
@@ -49,5 +50,5 @@ def send_carousel_message(reply_token, labels):
             if page == 10:
                 break
             page += 1
-    line_bot_api.reply_message(reply_token, TemplateSendMessage(alt_text='Carousel template', template=CarouselTemplate(columns=columns)))
+    line_bot_api.reply_message(reply_token, TemplateSendMessage(alt_text='請選擇文章', template=CarouselTemplate(columns=columns)))
     return "OK"
