@@ -1,17 +1,16 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
+name = "pypi"
+
+[packages]
+python-dotenv = "==0.21.0"
+flask = "==2.2.2"
+line-bot-sdk = "==2.3.0"
+transitions = "==0.9.0"
 
 [dev-packages]
 
-[packages]
-python-dotenv = "==0.10.3"
-pygraphviz = "==1.5"
-transitions = "==0.6.9"
-line-bot-sdk = "==1.14.0"
-Flask = "==1.0.2"
-
-
 [requires]
-python_version = "3.6"
+python_version = "3.10"
+python_full_version = "3.10.8"
