@@ -2,22 +2,15 @@ import os
 import sys
 
 from argparse import ArgumentParser
-
 from flask import Flask, request, abort, send_file
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage
 
-from fsm import TocMachine, states, transitions
+from fsm import PTTMachine, states, transitions
 from utils import send_text_message
 
-machine = TocMachine(
-    states=states,
-    transitions=transitions,
-    initial='init',
-    auto_transitions=False,
-    show_conditions=True,
-)
+machine = {}
 
 app = Flask(__name__, static_url_path="")
 
@@ -55,10 +48,7 @@ def callback():
             continue
         if not isinstance(event.message, TextMessage):
             continue
-
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.message.text)
-        )
+        send_text_message(event.reply_token, event.message.text)
     return "OK"
 
 
@@ -83,21 +73,21 @@ def webhook_handler():
             continue
         if not isinstance(event.message.text, str):
             continue
-        print(f"\nFSM STATE: {machine.state}")
-        print(f"REQUEST BODY: \n{body}")
         userID = event.source.user_id
         if userID not in machine:
-            machine[userID]
+            machine[userID] = PTTMachine(states=states, transitions=transitions, initial='init', auto_transitions=False, show_conditions=True)
+        print(f"\nFSM STATE: {machine[userID].state}")
+        print(f"REQUEST BODY: \n{body}")
         machine[userID].advance(event)
         if event.message.text.lower() == "show fsm":
-            show_fsm()
+            show_fsm(userID)
     return "OK"
 
 
 @app.route("/show-fsm", methods=["GET"])
-def show_fsm():
+def show_fsm(userID):
     if not os.path.exists("fsm.png"):
-        machine.get_graph().draw("fsm.png", prog="dot", format="png")
+        machine[userID].get_graph().draw("fsm.png", prog="dot", format="png")
     return send_file("fsm.png", mimetype="image/png")
 
 

@@ -40,7 +40,7 @@ def get_pttweb_boards():
 def get_pttweb_articles(url):
     response = request.get(url)
     soup = BeautifulSoup(response.text, 'lxml')
-    titles = soup.select('div.e7-container')
+    titles = soup.select('div.e7-container')[3:]
     articles = []
     for title in titles:
         title_url = title.select('a.e7-article-default')
@@ -52,7 +52,8 @@ def get_pttweb_articles(url):
     return articles
 
 
-def get_pttweb_board_articles(url):
+def get_pttweb_board_articles(board):
+    url = urljoin(pttweb_url, f'/bbs/{board}')
     response = request.get(url)
     soup = BeautifulSoup(response.text, 'lxml')
     titles = soup.select('div.mt-2 div.e7-container')
