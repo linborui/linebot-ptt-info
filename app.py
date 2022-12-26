@@ -13,7 +13,6 @@ from utils import send_text_message, send_image_message
 webhook_netloc = 'https://line-bot-python-flask-wmdi.onrender.com'
 
 machine = {}
-machine[0] = PTTMachine(states=states, transitions=transitions, initial='init', auto_transitions=False, show_conditions=True)
 
 app = Flask(__name__, static_url_path="")
 
@@ -89,7 +88,6 @@ def webhook_handler():
 
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
-    machine[0].get_graph().draw("fsm.png", prog="dot", format="png")
     return send_file("fsm.png", mimetype="image/png")
 
 
