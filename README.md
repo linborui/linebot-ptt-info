@@ -1,5 +1,7 @@
 # Line Bot PTT Information
 
+---
+
 ## How To Use
 
 ### 1. 主選單
@@ -29,6 +31,8 @@
 可以選擇要跳轉 ptt.cc 或是 pttweb.cc 的連結
 
 ![links](img/linbot-links.jpg)
+
+---
 
 ## FSM Picture
 
